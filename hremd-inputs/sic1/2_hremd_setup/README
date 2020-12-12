@@ -1,0 +1,7 @@
+####Make a new topology file (processed.top) using "topol.top". For this one has to use: gmx grompp -p topol.top -pp processed.top -c md.tpr -f md.mdp. "processed.top" should have all the parameters required for the simulation in a single file. This means there should not be any "#include" statement inside the file.
+
+####Append "_" to solute atoms for which the Hamiltonian is to be scaled inside "processed.top" and save as "processed_.top". Refer to the PLUMED tutorial, which is very helpful and well writted: https://www.plumed.org/doc-v2.5/user-doc/html/hrex.html#:~:text=When%20patching%20GROMACS%20with%20PLUMED,the%20-hrex%20flag%20of%20mdrun%20.
+
+####Generated the replicas "*.tpr" files executing "hremd_replica.sh"
+
+####After generating replicas (topol*.tpr), run hremd using gromacs version that is compiled by patching with plumed. Make sure to have "plumed.dat" empty file in the same directory. Here is the example script to run hremd for 16 replicas with exchange every 400 MD steps: gmx_mpi mdrun -plumed plumed.dat -replex 400 -hrex -multi 16
